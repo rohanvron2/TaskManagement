@@ -1,3 +1,4 @@
+// task list component for displaying the list of tasks
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
@@ -8,6 +9,7 @@ import { Task } from '../types';
 const TaskList: React.FC = () => {
   const { tasks, filter, searchQuery, sortBy } = useSelector((state: RootState) => state.tasks);
 
+  // filter tasks based on the selected filter, search query, and sort by
   const filteredTasks = tasks
     .filter((task: Task) => {
       if (filter === 'completed') return task.completed;
@@ -21,11 +23,12 @@ const TaskList: React.FC = () => {
     .sort((a: Task, b: Task) => {
       const dateA = new Date(a[sortBy]).getTime();
       const dateB = new Date(b[sortBy]).getTime();
-      return dateB - dateA;
+      return dateA - dateB;
     });
 
   return (
     <div className="space-y-4">
+      {/* filter bar */}
       <div className="sticky top-0 z-10">
         <FilterBar />
       </div>
@@ -38,7 +41,9 @@ const TaskList: React.FC = () => {
               ))}
             </div>
           ) : (
+
             <div className="flex items-center justify-center h-32 text-gray-500">
+              {/* if no tasks found, display this message */}
               No tasks found
             </div>
           )}
